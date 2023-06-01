@@ -1,15 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Shop</title>
+  <title>Kicks Kenya Shop</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    .header {
+      background-color: #25d366;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .navbar {
+      background-color: #f5f5f5;
+      padding: 10px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .navbar ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar li {
+      display: inline-block;
+      margin-left: 10px;
+    }
+
+    .navbar li a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .navbar li a:hover {
+      color: #25d366;
     }
 
     .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -19,29 +57,46 @@
       width: 200px;
       margin: 20px;
       padding: 10px;
-      border: 1px solid #ddd;
+      background-color: #fff;
       border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
     }
 
     .product img {
-      width: 150px;
-      height: 150px;
+      width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    .product h2 {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .product p {
+      font-size: 14px;
       margin-bottom: 10px;
     }
 
     .cart-button {
-      background-color: #25D366;
+      background-color: #25d366;
       color: #fff;
       padding: 8px 15px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
       transition: transform 0.3s ease;
+      display: none;
     }
 
-    .cart-button:hover {
-      transform: scale(1.1);
+    .product:hover .cart-button {
+      display: block;
     }
 
     .cart-icon {
@@ -53,7 +108,7 @@
       justify-content: center;
       width: 50px;
       height: 50px;
-      background-color: #25D366;
+      background-color: #25d366;
       color: #fff;
       border-radius: 50%;
       cursor: pointer;
@@ -79,62 +134,21 @@
       position: fixed;
       top: 80px;
       right: 20px;
-      width: 250px;
+      width: 300px;
       background-color: #fff;
-      border: 1px solid #ddd;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       border-radius: 5px;
       padding: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      transform: translateX(100%);
-      transition: transform 0.3s ease;
-      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 999;
     }
 
     .cart-icon:hover + .cart-dropdown,
     .cart-dropdown:hover {
-      transform: translateX(0);
-    }
-
-    .cart-items {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .cart-items li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .cart-items li .product-name {
-      flex: 1;
-    }
-
-    .remove-button {
-      background-color: #ff3b30;
-      color: #fff;
-      padding: 2px 5px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .checkout-button {
-      margin-top: 20px;
-      background-color: #25D366;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .total {
-      margin-top: 10px;
-      font-weight: bold;
-      text-align: center;
+      opacity: 1;
+      pointer-events: auto;
     }
 
     .close-button {
@@ -147,21 +161,82 @@
       color: #aaa;
       cursor: pointer;
     }
+
+    .cart-items {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .cart-items li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .cart-items img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-name {
+      flex-grow: 1;
+      font-weight: bold;
+    }
+
+    .total {
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    .checkout-button {
+      width: 100%;
+      background-color: #25d366;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .checkout-button:hover {
+      transform: scale(1.1);
+    }
+
+    @media screen and (max-width: 768px) {
+      .product {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Shop</h1>
+  <div class="header">
+    <h1>Kicks Kenya Shop</h1>
+  </div>
 
-  <div class="cart-icon" onclick="toggleCart()">
-    <span class="cart-count" id="cart-count">0</span>
-    🛒
+  <div class="navbar">
+    <ul>
+      <li>
+        <div class="cart-icon">
+          <span class="cart-count" id="cart-count">0</span>
+          🛒
+        </div>
+      </li>
+    </ul>
   </div>
 
   <div class="cart-dropdown" id="cart-dropdown">
-    <button class="close-button" onclick="toggleCart()">x</button>
+    <button class="close-button">&#x2715;</button>
     <ul class="cart-items"></ul>
     <div class="total">Total: KES <span id="cart-total"></span></div>
-    <button class="checkout-button" onclick="checkout()">Checkout</button>
+    <button class="checkout-button">Checkout</button>
   </div>
 
   <div class="container">
@@ -171,7 +246,7 @@
         <h2>Product 1</h2>
         <p>Price: KES 100</p>
       </a>
-      <button class="cart-button" onclick="addToCart('Product 1', 100, 'https://dummyimage.com/150x150/000/fff')">Add to Cart</button>
+      <button class="cart-button">Add to Cart</button>
     </div>
 
     <div class="product">
@@ -180,7 +255,7 @@
         <h2>Product 2</h2>
         <p>Price: KES 150</p>
       </a>
-      <button class="cart-button" onclick="addToCart('Product 2', 150, 'https://dummyimage.com/150x150/000/fff')">Add to Cart</button>
+      <button class="cart-button">Add to Cart</button>
     </div>
 
     <div class="product">
@@ -189,7 +264,7 @@
         <h2>Product 3</h2>
         <p>Price: KES 200</p>
       </a>
-      <button class="cart-button" onclick="addToCart('Product 3', 200, 'https://dummyimage.com/150x150/000/fff')">Add to Cart</button>
+      <button class="cart-button">Add to Cart</button>
     </div>
 
     <div class="product">
@@ -198,28 +273,44 @@
         <h2>Product 4</h2>
         <p>Price: KES 250</p>
       </a>
-      <button class="cart-button" onclick="addToCart('Product 4', 250, 'https://dummyimage.com/150x150/000/fff')">Add to Cart</button>
+      <button class="cart-button">Add to Cart</button>
     </div>
+
+    <!-- Add more products here -->
   </div>
 
   <script>
     var cart = [];
     var total = 0;
 
-    function addToCart(productName, price, imageSrc) {
-      var product = {
-        name: productName,
-        price: price,
-        image: imageSrc
-      };
+    var cartButton = document.querySelector(".cart-icon");
+    var cartDropdown = document.querySelector(".cart-dropdown");
+    var closeButton = document.querySelector(".close-button");
+    var cartItemsList = document.querySelector(".cart-items");
+    var cartTotal = document.getElementById("cart-total");
+    var cartCount = document.getElementById("cart-count");
+    var checkoutButton = document.querySelector(".checkout-button");
 
-      cart.push(product);
-      total += price;
-      updateCart();
-    }
+    cartButton.addEventListener("click", toggleCart);
+    closeButton.addEventListener("click", toggleCart);
+    checkoutButton.addEventListener("click", checkout);
+
+    var addToCartButtons = document.querySelectorAll(".cart-button");
+    addToCartButtons.forEach(function (button, index) {
+      button.addEventListener("click", function () {
+        var product = {
+          name: "Product " + (index + 1),
+          price: getRandomPrice(),
+          image: "https://dummyimage.com/40x40/000/fff"
+        };
+
+        cart.push(product);
+        total += product.price;
+        updateCart();
+      });
+    });
 
     function updateCart() {
-      var cartItemsList = document.querySelector(".cart-items");
       cartItemsList.innerHTML = "";
 
       cart.forEach(function (product, index) {
@@ -237,10 +328,7 @@
         cartItemsList.appendChild(li);
       });
 
-      var cartTotal = document.getElementById("cart-total");
       cartTotal.innerText = total.toFixed(2);
-
-      var cartCount = document.getElementById("cart-count");
       cartCount.innerText = cart.length;
     }
 
@@ -251,7 +339,6 @@
     }
 
     function toggleCart() {
-      var cartDropdown = document.getElementById("cart-dropdown");
       cartDropdown.classList.toggle("open");
     }
 
@@ -261,21 +348,23 @@
         return;
       }
 
-      var message = "Checkout Summary:\n\n";
+      var message = "Checkout Summary:<br><br>";
 
       cart.forEach(function (product) {
-        message += "Product: " + product.name + "\n";
-        message += "Price: KES " + product.price + "\n\n";
+        message += "Product: " + product.name + "<br>";
+        message += "Price: KES " + product.price + "<br><br>";
       });
 
-      message += "Total: KES " + total.toFixed(2) + "\n";
+      message += "Total: KES " + total.toFixed(2) + "<br>";
 
-      var whatsappLink = "https://wa.me/254758915553?text=" + encodeURIComponent(message);
-      window.open(whatsappLink);
+      window.open(
+        "https://wa.me/254758915553?text=" + encodeURIComponent(message),
+        "_blank"
+      );
+    }
 
-      cart = [];
-      total = 0;
-      updateCart();
+    function getRandomPrice() {
+      return Math.floor(Math.random() * 100) + 50;
     }
   </script>
 </body>
