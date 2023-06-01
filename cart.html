@@ -175,8 +175,8 @@
     }
 
     .cart-items img {
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       margin-right: 10px;
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -276,6 +276,24 @@
       <button class="cart-button">Add to Cart</button>
     </div>
 
+    <div class="product">
+      <a href="https://dummy-product-page-5.com" target="_blank">
+        <img src="https://dummyimage.com/150x150/000/fff" alt="Product 5">
+        <h2>Product 5</h2>
+        <p>Price: KES 300</p>
+      </a>
+      <button class="cart-button">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <a href="https://dummy-product-page-6.com" target="_blank">
+        <img src="https://dummyimage.com/150x150/000/fff" alt="Product 6">
+        <h2>Product 6</h2>
+        <p>Price: KES 350</p>
+      </a>
+      <button class="cart-button">Add to Cart</button>
+    </div>
+
     <!-- Add more products here -->
   </div>
 
@@ -325,11 +343,12 @@
             <button class="remove-button" onclick="removeFromCart(${index})">&#128465;</button>
           </div>
         `;
+
         cartItemsList.appendChild(li);
       });
 
-      cartTotal.innerText = total.toFixed(2);
-      cartCount.innerText = cart.length;
+      cartTotal.textContent = total.toFixed(2);
+      cartCount.textContent = cart.length;
     }
 
     function removeFromCart(index) {
@@ -339,23 +358,17 @@
     }
 
     function toggleCart() {
-      cartDropdown.classList.toggle("open");
+      cartDropdown.classList.toggle("show");
     }
 
     function checkout() {
-      if (cart.length === 0) {
-        alert("Your cart is empty!");
-        return;
-      }
-
-      var message = "Checkout Summary:<br><br>";
+      var message = "Checkout%0A%0A";
 
       cart.forEach(function (product) {
-        message += "Product: " + product.name + "<br>";
-        message += "Price: KES " + product.price + "<br><br>";
+        message += `${product.name}%20-%20KES%20${product.price}%0A`;
       });
 
-      message += "Total: KES " + total.toFixed(2) + "<br>";
+      message += "Total:%20KES%20" + total.toFixed(2);
 
       window.open(
         "https://wa.me/254758915553?text=" + encodeURIComponent(message),
