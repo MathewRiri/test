@@ -65,6 +65,14 @@
       margin-top: 10px;
       font-weight: bold;
     }
+
+    .quantity-selector {
+      margin-top: 10px;
+    }
+
+    .quantity-selector label {
+      margin-right: 5px;
+    }
   </style>
 </head>
 <body>
@@ -75,28 +83,68 @@
       <img src="product1.jpg" alt="Product 1">
       <h2>Product 1</h2>
       <p>Price: $10</p>
-      <button class="cart-button" onclick="addToCart('Product 1', 10)">Add to Cart</button>
+      <div class="quantity-selector">
+        <label for="quantity1">Quantity:</label>
+        <select id="quantity1">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+      <button class="cart-button" onclick="addToCart('Product 1', 10, 'quantity1')">Add to Cart</button>
     </div>
 
     <div class="product">
       <img src="product2.jpg" alt="Product 2">
       <h2>Product 2</h2>
       <p>Price: $15</p>
-      <button class="cart-button" onclick="addToCart('Product 2', 15)">Add to Cart</button>
+      <div class="quantity-selector">
+        <label for="quantity2">Quantity:</label>
+        <select id="quantity2">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+      <button class="cart-button" onclick="addToCart('Product 2', 15, 'quantity2')">Add to Cart</button>
     </div>
 
     <div class="product">
       <img src="product3.jpg" alt="Product 3">
       <h2>Product 3</h2>
       <p>Price: $20</p>
-      <button class="cart-button" onclick="addToCart('Product 3', 20)">Add to Cart</button>
+      <div class="quantity-selector">
+        <label for="quantity3">Quantity:</label>
+        <select id="quantity3">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+      <button class="cart-button" onclick="addToCart('Product 3', 20, 'quantity3')">Add to Cart</button>
     </div>
 
     <div class="product">
       <img src="product4.jpg" alt="Product 4">
       <h2>Product 4</h2>
       <p>Price: $25</p>
-      <button class="cart-button" onclick="addToCart('Product 4', 25)">Add to Cart</button>
+      <div class="quantity-selector">
+        <label for="quantity4">Quantity:</label>
+        <select id="quantity4">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+      <button class="cart-button" onclick="addToCart('Product 4', 25, 'quantity4')">Add to Cart</button>
     </div>
   </div>
 
@@ -111,13 +159,20 @@
     var cart = [];
     var total = 0;
 
-    function addToCart(productName, price) {
+    function addToCart(productName, price, quantityId) {
+      var quantitySelect = document.getElementById(quantityId);
+      var quantity = parseInt(quantitySelect.value);
+      var productTotal = price * quantity;
+
       var product = {
         name: productName,
-        price: price
+        price: price,
+        quantity: quantity,
+        total: productTotal
       };
+
       cart.push(product);
-      total += price;
+      total += productTotal;
       updateCart();
     }
 
@@ -128,7 +183,7 @@
 
       cart.forEach(function (product) {
         var li = document.createElement("li");
-        li.innerText = product.name + " - $" + product.price;
+        li.innerText = product.name + " - $" + product.price + " x " + product.quantity + " = $" + product.total;
         cartItems.appendChild(li);
       });
 
@@ -145,12 +200,14 @@
 
       cart.forEach(function (product) {
         message += "Product: " + product.name + "<br>";
-        message += "Price: $" + product.price + "<br><br>";
+        message += "Price: $" + product.price + "<br>";
+        message += "Quantity: " + product.quantity + "<br>";
+        message += "Total: $" + product.total + "<br><br>";
       });
 
       message += "Total: $" + total.toFixed(2) + "<br>";
 
-      var whatsappLink = "https://wa.me/1234567890?text=" + encodeURIComponent(message);
+      var whatsappLink = "https://wa.me/254758915553?text=" + encodeURIComponent(message);
       window.open(whatsappLink);
 
       cart = [];
