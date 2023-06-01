@@ -60,6 +60,11 @@
     .cart li {
       margin-bottom: 10px;
     }
+
+    .total {
+      margin-top: 10px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -98,11 +103,13 @@
   <div class="cart">
     <h2>Cart</h2>
     <ul id="cart-items"></ul>
+    <div class="total">Total: $<span id="cart-total"></span></div>
     <button class="checkout-button" onclick="checkout()">Checkout</button>
   </div>
 
   <script>
     var cart = [];
+    var total = 0;
 
     function addToCart(productName, price) {
       var product = {
@@ -110,11 +117,13 @@
         price: price
       };
       cart.push(product);
+      total += price;
       updateCart();
     }
 
     function updateCart() {
       var cartItems = document.getElementById("cart-items");
+      var cartTotal = document.getElementById("cart-total");
       cartItems.innerHTML = "";
 
       cart.forEach(function (product) {
@@ -122,6 +131,8 @@
         li.innerText = product.name + " - $" + product.price;
         cartItems.appendChild(li);
       });
+
+      cartTotal.innerText = total.toFixed(2);
     }
 
     function checkout() {
@@ -130,17 +141,20 @@
         return;
       }
 
-      var message = "Checkout Summary:%0A%0A";
+      var message = "Checkout Summary:<br><br>";
 
       cart.forEach(function (product) {
-        message += "Product: " + product.name + "%0A";
-        message += "Price: $" + product.price + "%0A%0A";
+        message += "Product: " + product.name + "<br>";
+        message += "Price: $" + product.price + "<br><br>";
       });
 
-      var whatsappLink = "https://wa.me/254758915553?text=" + encodeURIComponent(message);
+      message += "Total: $" + total.toFixed(2) + "<br>";
+
+      var whatsappLink = "https://wa.me/1234567890?text=" + encodeURIComponent(message);
       window.open(whatsappLink);
 
       cart = [];
+      total = 0;
       updateCart();
     }
   </script>
