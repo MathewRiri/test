@@ -37,6 +37,11 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .cart-button:hover {
+      transform: scale(1.1);
     }
 
     .cart-icon {
@@ -71,22 +76,23 @@
     }
 
     .cart-dropdown {
-      position: absolute;
-      top: calc(100% + 10px);
-      right: 10px;
+      position: fixed;
+      top: 80px;
+      right: 20px;
       width: 250px;
       background-color: #fff;
       border: 1px solid #ddd;
       border-radius: 5px;
       padding: 10px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      display: none;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
       z-index: 1;
     }
 
     .cart-icon:hover + .cart-dropdown,
     .cart-dropdown:hover {
-      display: block;
+      transform: translateX(0);
     }
 
     .cart-items {
@@ -130,6 +136,17 @@
       font-weight: bold;
       text-align: center;
     }
+
+    .close-button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: #aaa;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -141,6 +158,7 @@
   </div>
 
   <div class="cart-dropdown" id="cart-dropdown">
+    <button class="close-button" onclick="toggleCart()">x</button>
     <ul class="cart-items"></ul>
     <div class="total">Total: KES <span id="cart-total"></span></div>
     <button class="checkout-button" onclick="checkout()">Checkout</button>
@@ -153,7 +171,7 @@
         <h2>Product 1</h2>
         <p>Price: KES 100</p>
       </a>
-      <button class="cart-button" onclick="addToCart('Product 1', 100)">Add to Cart</button>
+      <button class="cart-button" onclick="addToCart('Product 1', 100, 'https://dummyimage.com/150x150/000/fff')">Add to Cart</button>
     </div>
 
     <div class="product">
@@ -162,7 +180,7 @@
         <h2>Product 2</h2>
         <p>Price: KES 150</p>
       </a>
-      <button class="cart-button" onclick="addToCart('Product 2', 150)">Add to Cart</button>
+      <button class="cart-button" onclick="addToCart('Product 2', 150, 'https://dummyimage.com/150x150/000/fff')">Add to Cart</button>
     </div>
 
     <div class="product">
@@ -171,7 +189,7 @@
         <h2>Product 3</h2>
         <p>Price: KES 200</p>
       </a>
-      <button class="cart-button" onclick="addToCart('Product 3', 200)">Add to Cart</button>
+      <button class="cart-button" onclick="addToCart('Product 3', 200, 'https://dummyimage.com/150x150/000/fff')">Add to Cart</button>
     </div>
 
     <div class="product">
@@ -180,7 +198,7 @@
         <h2>Product 4</h2>
         <p>Price: KES 250</p>
       </a>
-      <button class="cart-button" onclick="addToCart('Product 4', 250)">Add to Cart</button>
+      <button class="cart-button" onclick="addToCart('Product 4', 250, 'https://dummyimage.com/150x150/000/fff')">Add to Cart</button>
     </div>
   </div>
 
@@ -188,10 +206,11 @@
     var cart = [];
     var total = 0;
 
-    function addToCart(productName, price) {
+    function addToCart(productName, price, imageSrc) {
       var product = {
         name: productName,
-        price: price
+        price: price,
+        image: imageSrc
       };
 
       cart.push(product);
@@ -206,9 +225,14 @@
       cart.forEach(function (product, index) {
         var li = document.createElement("li");
         li.innerHTML = `
-          <span class="product-name">${product.name}</span>
-          <span>KES ${product.price}</span>
-          <button class="remove-button" onclick="removeFromCart(${index})">&#128465;</button>
+          <div>
+            <img src="${product.image}" alt="${product.name}">
+          </div>
+          <div>
+            <span class="product-name">${product.name}</span>
+            <span>KES ${product.price}</span>
+            <button class="remove-button" onclick="removeFromCart(${index})">&#128465;</button>
+          </div>
         `;
         cartItemsList.appendChild(li);
       });
@@ -228,7 +252,7 @@
 
     function toggleCart() {
       var cartDropdown = document.getElementById("cart-dropdown");
-      cartDropdown.style.display = cartDropdown.style.display === "block" ? "none" : "block";
+      cartDropdown.classList.toggle("open");
     }
 
     function checkout() {
