@@ -55,6 +55,21 @@
       font-size: 20px;
     }
 
+    .cart-count {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background-color: #ff3b30;
+      color: #fff;
+      font-size: 12px;
+      border-radius: 50%;
+    }
+
     .cart-dropdown {
       position: absolute;
       top: calc(100% + 10px);
@@ -81,7 +96,23 @@
     }
 
     .cart-items li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 10px;
+    }
+
+    .cart-items li .product-name {
+      flex: 1;
+    }
+
+    .remove-button {
+      background-color: #ff3b30;
+      color: #fff;
+      padding: 2px 5px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
     }
 
     .checkout-button {
@@ -103,6 +134,17 @@
 </head>
 <body>
   <h1>Shop</h1>
+
+  <div class="cart-icon" onclick="toggleCart()">
+    <span class="cart-count" id="cart-count">0</span>
+    🛒
+  </div>
+
+  <div class="cart-dropdown" id="cart-dropdown">
+    <ul class="cart-items"></ul>
+    <div class="total">Total: KES <span id="cart-total"></span></div>
+    <button class="checkout-button" onclick="checkout()">Checkout</button>
+  </div>
 
   <div class="container">
     <div class="product">
@@ -142,14 +184,6 @@
     </div>
   </div>
 
-  <div class="cart-icon" onclick="toggleCart()">🛒</div>
-
-  <div class="cart-dropdown" id="cart-dropdown">
-    <ul class="cart-items"></ul>
-    <div class="total">Total: KES <span id="cart-total"></span></div>
-    <button class="checkout-button" onclick="checkout()">Checkout</button>
-  </div>
-
   <script>
     var cart = [];
     var total = 0;
@@ -169,14 +203,27 @@
       var cartItemsList = document.querySelector(".cart-items");
       cartItemsList.innerHTML = "";
 
-      cart.forEach(function (product) {
+      cart.forEach(function (product, index) {
         var li = document.createElement("li");
-        li.innerText = product.name + " - KES " + product.price;
+        li.innerHTML = `
+          <span class="product-name">${product.name}</span>
+          <span>KES ${product.price}</span>
+          <button class="remove-button" onclick="removeFromCart(${index})">&#128465;</button>
+        `;
         cartItemsList.appendChild(li);
       });
 
       var cartTotal = document.getElementById("cart-total");
       cartTotal.innerText = total.toFixed(2);
+
+      var cartCount = document.getElementById("cart-count");
+      cartCount.innerText = cart.length;
+    }
+
+    function removeFromCart(index) {
+      var removedProduct = cart.splice(index, 1)[0];
+      total -= removedProduct.price;
+      updateCart();
     }
 
     function toggleCart() {
