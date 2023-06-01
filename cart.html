@@ -55,26 +55,26 @@
       font-size: 20px;
     }
 
-    .cart-items {
+    .cart-dropdown {
       position: absolute;
       top: calc(100% + 10px);
-      right: 0;
+      right: 10px;
       width: 250px;
-      max-height: 200px;
-      overflow-y: auto;
       background-color: #fff;
       border: 1px solid #ddd;
       border-radius: 5px;
       padding: 10px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       display: none;
+      z-index: 1;
     }
 
-    .cart-items.visible {
+    .cart-icon:hover + .cart-dropdown,
+    .cart-dropdown:hover {
       display: block;
     }
 
-    .cart-items ul {
+    .cart-items {
       list-style-type: none;
       padding: 0;
       margin: 0;
@@ -106,38 +106,46 @@
 
   <div class="container">
     <div class="product">
-      <img src="product1.jpg" alt="Product 1">
-      <h2>Product 1</h2>
-      <p>Price: KES 100</p>
+      <a href="https://dummy-product-page-1.com" target="_blank">
+        <img src="https://dummyimage.com/150x150/000/fff" alt="Product 1">
+        <h2>Product 1</h2>
+        <p>Price: KES 100</p>
+      </a>
       <button class="cart-button" onclick="addToCart('Product 1', 100)">Add to Cart</button>
     </div>
 
     <div class="product">
-      <img src="product2.jpg" alt="Product 2">
-      <h2>Product 2</h2>
-      <p>Price: KES 150</p>
+      <a href="https://dummy-product-page-2.com" target="_blank">
+        <img src="https://dummyimage.com/150x150/000/fff" alt="Product 2">
+        <h2>Product 2</h2>
+        <p>Price: KES 150</p>
+      </a>
       <button class="cart-button" onclick="addToCart('Product 2', 150)">Add to Cart</button>
     </div>
 
     <div class="product">
-      <img src="product3.jpg" alt="Product 3">
-      <h2>Product 3</h2>
-      <p>Price: KES 200</p>
+      <a href="https://dummy-product-page-3.com" target="_blank">
+        <img src="https://dummyimage.com/150x150/000/fff" alt="Product 3">
+        <h2>Product 3</h2>
+        <p>Price: KES 200</p>
+      </a>
       <button class="cart-button" onclick="addToCart('Product 3', 200)">Add to Cart</button>
     </div>
 
     <div class="product">
-      <img src="product4.jpg" alt="Product 4">
-      <h2>Product 4</h2>
-      <p>Price: KES 250</p>
+      <a href="https://dummy-product-page-4.com" target="_blank">
+        <img src="https://dummyimage.com/150x150/000/fff" alt="Product 4">
+        <h2>Product 4</h2>
+        <p>Price: KES 250</p>
+      </a>
       <button class="cart-button" onclick="addToCart('Product 4', 250)">Add to Cart</button>
     </div>
   </div>
 
   <div class="cart-icon" onclick="toggleCart()">🛒</div>
 
-  <div class="cart-items" id="cart-items">
-    <ul></ul>
+  <div class="cart-dropdown" id="cart-dropdown">
+    <ul class="cart-items"></ul>
     <div class="total">Total: KES <span id="cart-total"></span></div>
     <button class="checkout-button" onclick="checkout()">Checkout</button>
   </div>
@@ -158,9 +166,7 @@
     }
 
     function updateCart() {
-      var cartItems = document.getElementById("cart-items");
-      var cartTotal = document.getElementById("cart-total");
-      var cartItemsList = cartItems.querySelector("ul");
+      var cartItemsList = document.querySelector(".cart-items");
       cartItemsList.innerHTML = "";
 
       cart.forEach(function (product) {
@@ -169,12 +175,13 @@
         cartItemsList.appendChild(li);
       });
 
+      var cartTotal = document.getElementById("cart-total");
       cartTotal.innerText = total.toFixed(2);
     }
 
     function toggleCart() {
-      var cartItems = document.getElementById("cart-items");
-      cartItems.classList.toggle("visible");
+      var cartDropdown = document.getElementById("cart-dropdown");
+      cartDropdown.style.display = cartDropdown.style.display === "block" ? "none" : "block";
     }
 
     function checkout() {
@@ -192,7 +199,7 @@
 
       message += "Total: KES " + total.toFixed(2) + "\n";
 
-      var whatsappLink = "https://wa.me/1234567890?text=" + encodeURIComponent(message);
+      var whatsappLink = "https://wa.me/254758915553?text=" + encodeURIComponent(message);
       window.open(whatsappLink);
 
       cart = [];
