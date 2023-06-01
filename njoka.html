@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shop</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .product {
+      width: 200px;
+      margin: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .product img {
+      width: 150px;
+      height: 150px;
+      margin-bottom: 10px;
+    }
+
+    .cart-button {
+      background-color: #25D366;
+      color: #fff;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .checkout-button {
+      margin-top: 20px;
+      background-color: #25D366;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .cart {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .cart ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .cart li {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Shop</h1>
+
+  <div class="container">
+    <div class="product">
+      <img src="product1.jpg" alt="Product 1">
+      <h2>Product 1</h2>
+      <p>Price: $10</p>
+      <button class="cart-button" onclick="addToCart('Product 1', 10)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="product2.jpg" alt="Product 2">
+      <h2>Product 2</h2>
+      <p>Price: $15</p>
+      <button class="cart-button" onclick="addToCart('Product 2', 15)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="product3.jpg" alt="Product 3">
+      <h2>Product 3</h2>
+      <p>Price: $20</p>
+      <button class="cart-button" onclick="addToCart('Product 3', 20)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="product4.jpg" alt="Product 4">
+      <h2>Product 4</h2>
+      <p>Price: $25</p>
+      <button class="cart-button" onclick="addToCart('Product 4', 25)">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="cart">
+    <h2>Cart</h2>
+    <ul id="cart-items"></ul>
+    <button class="checkout-button" onclick="checkout()">Checkout</button>
+  </div>
+
+  <script>
+    var cart = [];
+
+    function addToCart(productName, price) {
+      var product = {
+        name: productName,
+        price: price
+      };
+      cart.push(product);
+      updateCart();
+    }
+
+    function updateCart() {
+      var cartItems = document.getElementById("cart-items");
+      cartItems.innerHTML = "";
+
+      cart.forEach(function (product) {
+        var li = document.createElement("li");
+        li.innerText = product.name + " - $" + product.price;
+        cartItems.appendChild(li);
+      });
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+
+      var message = "Checkout Summary:%0A%0A";
+
+      cart.forEach(function (product) {
+        message += "Product: " + product.name + "%0A";
+        message += "Price: $" + product.price + "%0A%0A";
+      });
+
+      var whatsappLink = "https://wa.me/1234567890?text=" + encodeURIComponent(message);
+      window.open(whatsappLink);
+
+      cart = [];
+      updateCart();
+    }
+  </script>
+</body>
+</html>
