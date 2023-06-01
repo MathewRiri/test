@@ -36,7 +36,7 @@
   <script>
     function buyViaWhatsApp(productName, price, productId) {
       var quantity = document.getElementById("quantity" + productId).value;
-      var message = "I would like to buy " + quantity + " " + productName + "(s) for a total of $" + (price * quantity) + ". Please let me know the payment details.";
+      var message = "I would like to buy " + quantity + "Pcs" + " " + productName + "(s) for a total of Ksh" + (price * quantity) + ". Please let me know the payment details.";
 
       var whatsappLink = "https://wa.me/254727105640?text=" + encodeURIComponent(message);
       window.open(whatsappLink);
