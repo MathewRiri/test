@@ -1,118 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Shop</title>
   <style>
-    /* Global Styles */
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-
-    /* Navbar Styles */
+    /* CSS styles for the shop layout */
     .navbar {
-      background: #333;
-      color: #fff;
+      background-color: black;
+      color: white;
       padding: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .navbar h1 {
-      margin: 0;
-      font-size: 24px;
-    }
-
-    /* Cart Icon Styles */
     .cart-icon {
       position: relative;
-      display: flex;
-      align-items: center;
       cursor: pointer;
     }
 
     .cart-icon img {
-      width: 25px;
+      width: 30px;
       height: auto;
-      margin-right: 5px;
     }
 
     .cart-count {
-      background: red;
-      color: #fff;
-      font-size: 12px;
-      padding: 2px 5px;
-      border-radius: 50%;
       position: absolute;
-      top: -5px;
-      right: -5px;
+      top: -10px;
+      right: -10px;
+      background-color: red;
+      color: white;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 50%;
     }
 
-    /* Products Container Styles */
     .products {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 20px;
+      justify-content: space-between;
     }
 
-    /* Product Styles */
     .product {
-      background: #f4f4f4;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      text-align: center;
       width: 200px;
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .product img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 10px;
     }
 
     .product h2 {
       margin: 0;
-      font-size: 18px;
-      margin-bottom: 10px;
+      font-size: 16px;
     }
 
     .product p {
       margin: 0;
       font-size: 14px;
-      color: #555;
     }
 
-    .product img {
-      width: 100px;
-      height: 100px;
-      margin-bottom: 10px;
-    }
-
-    .product .buttons {
+    .buttons {
+      display: flex;
+      justify-content: space-between;
       margin-top: 10px;
     }
 
-    .product .buttons button {
-      padding: 8px 16px;
+    .cart-button,
+    .buy-now-button {
+      padding: 8px 12px;
       border: none;
-      background: #333;
-      color: #fff;
+      background-color: #333;
+      color: white;
       cursor: pointer;
       font-size: 14px;
-      transition: background 0.3s ease;
+      transition: background-color 0.3s ease;
     }
 
-    .product .buttons button:hover {
-      background: #555;
+    .cart-button:hover,
+    .buy-now-button:hover {
+      background-color: #555;
     }
 
-    /* Cart Dropdown Styles */
     .cart-dropdown {
       position: fixed;
-      top: 60px;
-      right: 20px;
-      background: #fff;
+      top: 50px;
+      right: 10px;
+      background-color: white;
+      width: 300px;
+      padding: 10px;
       border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      padding: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
       display: none;
       z-index: 999;
     }
@@ -122,31 +106,25 @@
     }
 
     .cart-dropdown h3 {
-      margin: 0 0 10px;
-      font-size: 16px;
+      margin-top: 0;
     }
 
-    .cart-dropdown ul {
-      list-style: none;
+    .cart-items {
+      list-style-type: none;
       padding: 0;
-      margin: 0;
     }
 
-    .cart-dropdown li {
-      font-size: 14px;
-      margin-bottom: 5px;
+    .cart-items li {
       display: flex;
       align-items: center;
+      padding: 10px 0;
+      border-top: 1px solid #eee;
     }
 
-    .cart-dropdown li img {
+    .cart-items img {
       width: 30px;
       height: auto;
-      margin-right: 5px;
-    }
-
-    .cart-dropdown p {
-      margin: 0;
+      margin-right: 10px;
     }
 
     .cart-summary {
@@ -162,30 +140,30 @@
     .cart-summary button {
       padding: 8px 16px;
       border: none;
-      background: #333;
-      color: #fff;
+      background-color: #333;
+      color: white;
       cursor: pointer;
       font-size: 14px;
-      transition: background 0.3s ease;
-      margin-top: 10px;
+      transition: background-color 0.3s ease;
     }
 
     .cart-summary button:hover {
-      background: #555;
+      background-color: #555;
     }
   </style>
 </head>
 <body>
   <div class="navbar">
-    <h1>My Shop</h1>
+    <div>
+      <h1>My Shop</h1>
+    </div>
     <div class="cart-icon">
       <img src="cart-icon.png" alt="Cart Icon">
-      <span id="cart-count">0</span>
+      <span class="cart-count">0</span>
     </div>
   </div>
 
   <div class="products">
-    <!-- Product 1 -->
     <div class="product">
       <img src="product1.png" alt="Product 1">
       <h2>Product 1</h2>
@@ -195,8 +173,6 @@
         <button class="buy-now-button">Buy Now</button>
       </div>
     </div>
-
-    <!-- Product 2 -->
     <div class="product">
       <img src="product2.png" alt="Product 2">
       <h2>Product 2</h2>
@@ -206,12 +182,9 @@
         <button class="buy-now-button">Buy Now</button>
       </div>
     </div>
-
-    <!-- Add more products here -->
-
+    <!-- Add more product containers as needed -->
   </div>
 
-  <!-- Cart Dropdown -->
   <div class="cart-dropdown">
     <h3>Cart</h3>
     <ul class="cart-items"></ul>
@@ -223,94 +196,74 @@
 
   <script>
     var cart = [];
-var total = 0;
+    var total = 0;
 
-var cartIcon = document.querySelector(".cart-icon");
-var cartCount = document.getElementById("cart-count");
-var cartDropdown = document.querySelector(".cart-dropdown");
-var cartItemsList = document.querySelector(".cart-items");
-var cartTotal = document.getElementById("cart-total");
-var checkoutButton = document.querySelector(".checkout-button");
+    var cartIcon = document.querySelector(".cart-icon");
+    var cartCount = document.querySelector(".cart-count");
+    var cartDropdown = document.querySelector(".cart-dropdown");
+    var cartItemsList = document.querySelector(".cart-items");
+    var cartTotal = document.getElementById("cart-total");
+    var addToCartButtons = document.querySelectorAll(".cart-button");
+    var buyNowButtons = document.querySelectorAll(".buy-now-button");
+    var checkoutButton = document.querySelector(".checkout-button");
 
-cartIcon.addEventListener("click", toggleCart);
-
-var addToCartButtons = document.querySelectorAll(".cart-button");
-addToCartButtons.forEach(function (button) {
-  button.addEventListener("click", function () {
-    var productContainer = button.closest(".product");
-    var productName = productContainer.querySelector(".product-name").textContent;
-    var productPrice = parseFloat(productContainer.querySelector(".product-price").textContent);
-    var productImageSrc = productContainer.querySelector(".product-image").src;
-
-    var existingProduct = cart.find(function (product) {
-      return product.name === productName;
+    cartIcon.addEventListener("click", function () {
+      cartDropdown.classList.toggle("show");
     });
 
-    if (existingProduct) {
-      existingProduct.quantity++;
-    } else {
-      var product = {
-        name: productName,
-        price: productPrice,
-        quantity: 1,
-        imageSrc: productImageSrc
-      };
-      cart.push(product);
-    }
+    addToCartButtons.forEach(function (button, index) {
+      button.addEventListener("click", function () {
+        var productContainer = button.closest(".product");
+        var productName = productContainer.querySelector("h2").textContent;
+        var productPrice = parseFloat(productContainer.querySelector("p").textContent.split(":")[1].trim());
+        var productImageSrc = productContainer.querySelector("img").getAttribute("src");
 
-    total += productPrice;
-    updateCart();
-  });
-});
+        var existingProduct = cart.find(function (product) {
+          return product.name === productName;
+        });
 
-checkoutButton.addEventListener("click", function () {
-  var cartSummary = generateCartSummary();
-  var message = encodeURIComponent(cartSummary);
+        if (existingProduct) {
+          existingProduct.quantity++;
+        } else {
+          var product = {
+            name: productName,
+            price: productPrice,
+            quantity: 1,
+            imageSrc: productImageSrc
+          };
+          cart.push(product);
+        }
 
-  window.open(
-    "https://wa.me/your-whatsapp-number?text=" + message,
-    "_blank"
-  );
-});
+        total += productPrice;
+        cartCount.textContent = cart.reduce(function (accumulator, product) {
+          return accumulator + product.quantity;
+        }, 0);
+      });
+    });
 
-function updateCart() {
-  cartItemsList.innerHTML = "";
-  cartCount.textContent = cart.reduce(function (accumulator, product) {
-    return accumulator + product.quantity;
-  }, 0);
-  cartTotal.textContent = total.toFixed(2);
+    buyNowButtons.forEach(function (button, index) {
+      button.addEventListener("click", function () {
+        var productContainer = button.closest(".product");
+        var productName = productContainer.querySelector("h2").textContent;
+        var productPrice = parseFloat(productContainer.querySelector("p").textContent.split(":")[1].trim());
 
-  cart.forEach(function (product) {
-    var listItem = document.createElement("li");
-    var image = document.createElement("img");
-    image.src = product.imageSrc;
-    image.width = 30;
-    image.height = 30;
-    listItem.appendChild(image);
-    var productInfo = document.createElement("p");
-    productInfo.textContent = `${product.name} (Quantity: ${product.quantity}) - KES ${product.price.toFixed(2)}`;
-    listItem.appendChild(productInfo);
-    cartItemsList.appendChild(listItem);
-  });
-}
+        var message = "Product: " + productName + "";
+        message += "Price: KES " + productPrice.toFixed(2);
 
-function toggleCart() {
-  cartDropdown.classList.toggle("show");
-}
+        window.open("https://api.whatsapp.com/send?phone=254758915553=" + encodeURI(message));
+      });
+    });
 
-function generateCartSummary() {
-  var summary = "Cart Summary:\n\n";
+    checkoutButton.addEventListener("click", function () {
+      var summary = "Cart Summary:%0A";
+      cart.forEach(function (product) {
+        summary += "Product: " + product.name + "/n";
+        summary += "Price: KES " + (product.price * product.quantity).toFixed(2) + "/n";
+        summary += "Quantity: " + product.quantity + "/n";
+      });
 
-  cart.forEach(function (product) {
-    var totalPrice = product.price * product.quantity;
-    summary += `${product.name} (Quantity: ${product.quantity}) - KES ${totalPrice.toFixed(2)}\n`;
-  });
-
-  summary += `\nTotal: KES ${total.toFixed(2)}`;
-
-  return summary;
-}
-
+      window.open("https://api.whatsapp.com/send?phone=254758915553&text=" + encodeURI(summary));
+    });
   </script>
 </body>
 </html>
