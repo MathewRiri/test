@@ -3,267 +3,198 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Shop</title>
+  <title>Product Page</title>
   <style>
-    /* CSS styles for the shop layout */
-    .navbar {
-      background-color: black;
-      color: white;
-      padding: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .cart-icon {
-      position: relative;
-      cursor: pointer;
-    }
-
-    .cart-icon img {
-      width: 30px;
-      height: auto;
-    }
-
-    .cart-count {
-      position: absolute;
-      top: -10px;
-      right: -10px;
-      background-color: red;
-      color: white;
-      font-size: 12px;
-      padding: 2px 6px;
-      border-radius: 50%;
-    }
-
-    .products {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-
-    .product {
-      width: 200px;
-      margin-bottom: 20px;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-
-    .product img {
-      width: 100%;
-      height: auto;
-      margin-bottom: 10px;
-    }
-
-    .product h2 {
+    /* Add your custom CSS styles here */
+    body {
+      font-family: Arial, sans-serif;
       margin: 0;
-      font-size: 16px;
-    }
-
-    .product p {
-      margin: 0;
-      font-size: 14px;
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
-    }
-
-    .cart-button,
-    .buy-now-button {
-      padding: 8px 12px;
-      border: none;
-      background-color: #333;
-      color: white;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background-color 0.3s ease;
-    }
-
-    .cart-button:hover,
-    .buy-now-button:hover {
-      background-color: #555;
-    }
-
-    .cart-dropdown {
-      position: fixed;
-      top: 50px;
-      right: 10px;
-      background-color: white;
-      width: 300px;
-      padding: 10px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      display: none;
-      z-index: 999;
-    }
-
-    .cart-dropdown.show {
-      display: block;
-    }
-
-    .cart-dropdown h3 {
-      margin-top: 0;
-    }
-
-    .cart-items {
-      list-style-type: none;
       padding: 0;
     }
 
-    .cart-items li {
+    .container {
       display: flex;
-      align-items: center;
-      padding: 10px 0;
-      border-top: 1px solid #eee;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px;
     }
 
-    .cart-items img {
-      width: 30px;
-      height: auto;
+    .product {
+      display: flex;
+      align-items: flex-start;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .product-image {
+      width: 50%;
+      padding-right: 20px;
+    }
+
+    .product-details {
+      width: 50%;
+    }
+
+    .product-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .product-price {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .product-description {
+      margin-top: 20px;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 20px;
+    }
+
+    .add-to-cart-button,
+    .checkout-button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
       margin-right: 10px;
     }
 
+    .checkout-button {
+      background-color: #28a745;
+    }
+
     .cart-summary {
-      margin-top: 10px;
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+      background-color: #f8f9fa;
     }
 
-    .cart-summary p {
-      margin: 0;
-      font-size: 16px;
+    .cart-summary-title {
+      font-size: 18px;
       font-weight: bold;
+      margin-bottom: 10px;
     }
 
-    .cart-summary button {
-      padding: 8px 16px;
-      border: none;
-      background-color: #333;
-      color: white;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background-color 0.3s ease;
+    .cart-summary-product {
+      margin-bottom: 5px;
     }
 
-    .cart-summary button:hover {
-      background-color: #555;
+    .cart-summary-total {
+      font-weight: bold;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="navbar">
-    <div>
-      <h1>My Shop</h1>
-    </div>
-    <div class="cart-icon">
-      <img src="cart-icon.png" alt="Cart Icon">
-      <span class="cart-count">0</span>
+  <div class="container">
+    <div class="product">
+      <div class="product-image">
+        <img src="path/to/product-image.jpg" alt="Product Image">
+      </div>
+      <div class="product-details">
+        <h2 class="product-title">Product Title</h2>
+        <p class="product-price">Price: $99.99</p>
+        <p class="product-description">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tempor, turpis eu faucibus faucibus, mauris ligula sagittis elit, sed blandit mauris orci sit amet mauris.
+        </p>
+        <div class="button-container">
+          <button class="add-to-cart-button">Add to Cart</button>
+          <button class="checkout-button">Checkout</button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="products">
-    <div class="product">
-      <img src="product1.png" alt="Product 1">
-      <h2>Product 1</h2>
-      <p>Price: KES 100</p>
-      <div class="buttons">
-        <button class="cart-button">Add to Cart</button>
-        <button class="buy-now-button">Buy Now</button>
-      </div>
+  <div class="cart-summary">
+    <h3 class="cart-summary-title">Cart Summary</h3>
+    <div class="cart-summary-product">
+      <p>Product: Product Title</p>
+      <p>Price: $99.99</p>
     </div>
-    <div class="product">
-      <img src="product2.png" alt="Product 2">
-      <h2>Product 2</h2>
-      <p>Price: KES 200</p>
-      <div class="buttons">
-        <button class="cart-button">Add to Cart</button>
-        <button class="buy-now-button">Buy Now</button>
-      </div>
-    </div>
-    <!-- Add more product containers as needed -->
-  </div>
-
-  <div class="cart-dropdown">
-    <h3>Cart</h3>
-    <ul class="cart-items"></ul>
-    <div class="cart-summary">
-      <p>Total: KES <span id="cart-total">0.00</span></p>
-      <button class="checkout-button">Checkout</button>
+    <div class="cart-summary-total">
+      <p>Total: $99.99</p>
     </div>
   </div>
 
   <script>
-    var cart = [];
-    var total = 0;
-
-    var cartIcon = document.querySelector(".cart-icon");
-    var cartCount = document.querySelector(".cart-count");
-    var cartDropdown = document.querySelector(".cart-dropdown");
-    var cartItemsList = document.querySelector(".cart-items");
-    var cartTotal = document.getElementById("cart-total");
-    var addToCartButtons = document.querySelectorAll(".cart-button");
-    var buyNowButtons = document.querySelectorAll(".buy-now-button");
+    var addToCartButton = document.querySelector(".add-to-cart-button");
     var checkoutButton = document.querySelector(".checkout-button");
 
-    cartIcon.addEventListener("click", function () {
-      cartDropdown.classList.toggle("show");
-    });
-
-    addToCartButtons.forEach(function (button, index) {
-      button.addEventListener("click", function () {
-        var productContainer = button.closest(".product");
-        var productName = productContainer.querySelector("h2").textContent;
-        var productPrice = parseFloat(productContainer.querySelector("p").textContent.split(":")[1].trim());
-        var productImageSrc = productContainer.querySelector("img").getAttribute("src");
-
-        var existingProduct = cart.find(function (product) {
-          return product.name === productName;
-        });
-
-        if (existingProduct) {
-          existingProduct.quantity++;
-        } else {
-          var product = {
-            name: productName,
-            price: productPrice,
-            quantity: 1,
-            imageSrc: productImageSrc
-          };
-          cart.push(product);
-        }
-
-        total += productPrice;
-        cartCount.textContent = cart.reduce(function (accumulator, product) {
-          return accumulator + product.quantity;
-        }, 0);
-      });
-    });
-
-    buyNowButtons.forEach(function (button, index) {
-      button.addEventListener("click", function () {
-        var productContainer = button.closest(".product");
-        var productName = productContainer.querySelector("h2").textContent;
-        var productPrice = parseFloat(productContainer.querySelector("p").textContent.split(":")[1].trim());
-
-        var message = "Product: " + productName + "";
-        message += "Price: KES " + productPrice.toFixed(2);
-
-        window.open("https://api.whatsapp.com/send?phone=254758915553=" + encodeURI(message));
-      });
+    addToCartButton.addEventListener("click", function () {
+      var productName = document.querySelector(".product-title").textContent;
+      var productPrice = document.querySelector(".product-price").textContent;
+      addToCart(productName, productPrice);
     });
 
     checkoutButton.addEventListener("click", function () {
-      var summary = "Cart Summary:%0A";
-      cart.forEach(function (product) {
-        summary += "Product: " + product.name + "/n";
-        summary += "Price: KES " + (product.price * product.quantity).toFixed(2) + "/n";
-        summary += "Quantity: " + product.quantity + "/n";
+      var cartSummary = generateCartSummary();
+      var message = encodeURIComponent(cartSummary);
+      var whatsappURL = "https://wa.me/254758915553?text=" + message;
+
+      window.open(whatsappURL, "_blank");
+    });
+
+    function addToCart(name, price) {
+      var cartItem = {
+        name: name,
+        price: price
+      };
+
+      var cartSummary = generateCartSummary();
+      var cartSummaryElement = document.querySelector(".cart-summary");
+      cartSummaryElement.innerHTML = cartSummary;
+
+      // Add the cart item to the cart array or update the quantity if it already exists
+      var existingCartItem = cart.find(function (item) {
+        return item.name === cartItem.name;
       });
 
-      window.open("https://api.whatsapp.com/send?phone=254758915553&text=" + encodeURI(summary));
-    });
+      if (existingCartItem) {
+        existingCartItem.quantity++;
+      } else {
+        cart.push({
+          name: cartItem.name,
+          price: cartItem.price,
+          quantity: 1
+        });
+      }
+    }
+
+    function generateCartSummary() {
+      var summary = "<h3 class='cart-summary-title'>Cart Summary</h3>";
+
+      for (var i = 0; i < cart.length; i++) {
+        var item = cart[i];
+        var totalPrice = item.price * item.quantity;
+        summary += `
+          <div class='cart-summary-product'>
+            <p>Product: ${item.name}</p>
+            <p>Price: ${item.price}</p>
+            <p>Quantity: ${item.quantity}</p>
+            <p>Total: ${totalPrice}</p>
+          </div>
+        `;
+      }
+
+      var total = cart.reduce(function (accumulator, item) {
+        return accumulator + (item.price * item.quantity);
+      }, 0);
+
+      summary += `<p class='cart-summary-total'>Total: $${total.toFixed(2)}</p>`;
+
+      return summary;
+    }
   </script>
 </body>
 </html>
