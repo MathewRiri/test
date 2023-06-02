@@ -223,87 +223,94 @@
 
   <script>
     var cart = [];
-    var total = 0;
+var total = 0;
 
-    var cartIcon = document.querySelector(".cart-icon");
-    var cartCount = document.getElementById("cart-count");
-    var cartDropdown = document.querySelector(".cart-dropdown");
-    var cartItemsList = document.querySelector(".cart-items");
-    var cartTotal = document.getElementById("cart-total");
+var cartIcon = document.querySelector(".cart-icon");
+var cartCount = document.getElementById("cart-count");
+var cartDropdown = document.querySelector(".cart-dropdown");
+var cartItemsList = document.querySelector(".cart-items");
+var cartTotal = document.getElementById("cart-total");
+var checkoutButton = document.querySelector(".checkout-button");
 
-    cartIcon.addEventListener("click", toggleCart);
+cartIcon.addEventListener("click", toggleCart);
 
-    var addToCartButtons = document.querySelectorAll(".cart-button");
-    addToCartButtons.forEach(function (button, index) {
-      button.addEventListener("click", function () {
-        var productContainer = button.closest(".product");
-        var productName = productContainer.querySelector("h2").textContent;
-        var productPrice = parseFloat(productContainer.querySelector("p").textContent.split(":")[1].trim().split(" ")[1]);
-        var productImageSrc = productContainer.querySelector("img").getAttribute("src");
+var addToCartButtons = document.querySelectorAll(".cart-button");
+addToCartButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    var productContainer = button.closest(".product");
+    var productName = productContainer.querySelector(".product-name").textContent;
+    var productPrice = parseFloat(productContainer.querySelector(".product-price").textContent);
+    var productImageSrc = productContainer.querySelector(".product-image").src;
 
-        var existingProductIndex = cart.findIndex(function (product) {
-          return product.name === productName;
-        });
-
-        if (existingProductIndex !== -1) {
-          cart[existingProductIndex].quantity += 1;
-        } else {
-          var product = {
-            name: productName,
-            price: productPrice,
-            quantity: 1,
-            imageSrc: productImageSrc
-          };
-          cart.push(product);
-        }
-
-        total += productPrice;
-
-        updateCart();
-      });
+    var existingProduct = cart.find(function (product) {
+      return product.name === productName;
     });
 
-    var buyNowButtons = document.querySelectorAll(".buy-now-button");
-    buyNowButtons.forEach(function (button, index) {
-      button.addEventListener("click", function () {
-        var productContainer = button.closest(".product");
-        var productName = productContainer.querySelector("h2").textContent;
-        var productPrice = parseFloat(productContainer.querySelector("p").textContent.split(":")[1].trim().split(" ")[1]);
-        var productImageSrc = productContainer.querySelector("img").getAttribute("src");
-
-        var message = `Product: ${productName}%0APrice: KES ${productPrice}%0AImage: ${productImageSrc}`;
-
-        window.open(
-          "https://wa.me/254758915553?text=" + encodeURIComponent(message),
-          "_blank"
-        );
-      });
-    });
-
-    function updateCart() {
-      cartItemsList.innerHTML = "";
-      cartCount.textContent = cart.reduce(function (accumulator, product) {
-        return accumulator + product.quantity;
-      }, 0);
-      cartTotal.textContent = total.toFixed(2);
-
-      cart.forEach(function (product, index) {
-        var li = document.createElement("li");
-        var image = document.createElement("img");
-        image.src = product.imageSrc;
-        image.width = 30;
-        image.height = 30;
-        li.appendChild(image);
-        var info = document.createElement("p");
-        info.textContent = `${product.name} (KES ${product.price.toFixed(2)} x ${product.quantity})`;
-        li.appendChild(info);
-        cartItemsList.appendChild(li);
-      });
+    if (existingProduct) {
+      existingProduct.quantity++;
+    } else {
+      var product = {
+        name: productName,
+        price: productPrice,
+        quantity: 1,
+        imageSrc: productImageSrc
+      };
+      cart.push(product);
     }
 
-    function toggleCart() {
-      cartDropdown.classList.toggle("show");
-    }
+    total += productPrice;
+    updateCart();
+  });
+});
+
+checkoutButton.addEventListener("click", function () {
+  var cartSummary = generateCartSummary();
+  var message = encodeURIComponent(cartSummary);
+
+  window.open(
+    "https://wa.me/your-whatsapp-number?text=" + message,
+    "_blank"
+  );
+});
+
+function updateCart() {
+  cartItemsList.innerHTML = "";
+  cartCount.textContent = cart.reduce(function (accumulator, product) {
+    return accumulator + product.quantity;
+  }, 0);
+  cartTotal.textContent = total.toFixed(2);
+
+  cart.forEach(function (product) {
+    var listItem = document.createElement("li");
+    var image = document.createElement("img");
+    image.src = product.imageSrc;
+    image.width = 30;
+    image.height = 30;
+    listItem.appendChild(image);
+    var productInfo = document.createElement("p");
+    productInfo.textContent = `${product.name} (Quantity: ${product.quantity}) - KES ${product.price.toFixed(2)}`;
+    listItem.appendChild(productInfo);
+    cartItemsList.appendChild(listItem);
+  });
+}
+
+function toggleCart() {
+  cartDropdown.classList.toggle("show");
+}
+
+function generateCartSummary() {
+  var summary = "Cart Summary:\n\n";
+
+  cart.forEach(function (product) {
+    var totalPrice = product.price * product.quantity;
+    summary += `${product.name} (Quantity: ${product.quantity}) - KES ${totalPrice.toFixed(2)}\n`;
+  });
+
+  summary += `\nTotal: KES ${total.toFixed(2)}`;
+
+  return summary;
+}
+
   </script>
 </body>
 </html>
