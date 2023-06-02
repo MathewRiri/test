@@ -80,6 +80,12 @@
       color: #555;
     }
 
+    .product img {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 10px;
+    }
+
     .product .buttons {
       margin-top: 10px;
     }
@@ -129,20 +135,31 @@
     .cart-dropdown li {
       font-size: 14px;
       margin-bottom: 5px;
+      display: flex;
+      align-items: center;
     }
 
-    .cart-dropdown .cart-summary {
-      margin-top: 10px;
-      text-align: right;
+    .cart-dropdown li img {
+      width: 30px;
+      height: auto;
+      margin-right: 5px;
     }
 
-    .cart-dropdown .cart-summary p {
+    .cart-dropdown p {
       margin: 0;
-      font-size: 14px;
+    }
+
+    .cart-summary {
+      margin-top: 10px;
+    }
+
+    .cart-summary p {
+      margin: 0;
+      font-size: 16px;
       font-weight: bold;
     }
 
-    .cart-dropdown .checkout-button {
+    .cart-summary button {
       padding: 8px 16px;
       border: none;
       background: #333;
@@ -153,7 +170,7 @@
       margin-top: 10px;
     }
 
-    .cart-dropdown .checkout-button:hover {
+    .cart-summary button:hover {
       background: #555;
     }
   </style>
@@ -170,6 +187,7 @@
   <div class="products">
     <!-- Product 1 -->
     <div class="product">
+      <img src="product1.png" alt="Product 1">
       <h2>Product 1</h2>
       <p>Price: KES 100</p>
       <div class="buttons">
@@ -180,6 +198,7 @@
 
     <!-- Product 2 -->
     <div class="product">
+      <img src="product2.png" alt="Product 2">
       <h2>Product 2</h2>
       <p>Price: KES 200</p>
       <div class="buttons">
@@ -213,7 +232,6 @@
     var cartTotal = document.getElementById("cart-total");
 
     cartIcon.addEventListener("click", toggleCart);
-    cartIcon.addEventListener("mouseover", toggleCart);
 
     var addToCartButtons = document.querySelectorAll(".cart-button");
     addToCartButtons.forEach(function (button, index) {
@@ -221,35 +239,39 @@
         var productContainer = button.closest(".product");
         var productName = productContainer.querySelector("h2").textContent;
         var productPrice = parseFloat(productContainer.querySelector("p").textContent.split(":")[1].trim().split(" ")[1]);
+        var productImageSrc = productContainer.querySelector("img").getAttribute("src");
 
-        var existingProduct = cart.find(function (product) {
+        var existingProductIndex = cart.findIndex(function (product) {
           return product.name === productName;
         });
 
-        if (existingProduct) {
-          existingProduct.quantity += 1;
+        if (existingProductIndex !== -1) {
+          cart[existingProductIndex].quantity += 1;
         } else {
           var product = {
             name: productName,
             price: productPrice,
-            quantity: 1
+            quantity: 1,
+            imageSrc: productImageSrc
           };
           cart.push(product);
         }
 
         total += productPrice;
+
         updateCart();
       });
     });
 
     var buyNowButtons = document.querySelectorAll(".buy-now-button");
-    buyNowButtons.forEach(function (button) {
+    buyNowButtons.forEach(function (button, index) {
       button.addEventListener("click", function () {
         var productContainer = button.closest(".product");
         var productName = productContainer.querySelector("h2").textContent;
         var productPrice = parseFloat(productContainer.querySelector("p").textContent.split(":")[1].trim().split(" ")[1]);
+        var productImageSrc = productContainer.querySelector("img").getAttribute("src");
 
-        var message = `Product: ${productName}\nPrice: KES ${productPrice}`;
+        var message = `Product: ${productName}%0APrice: KES ${productPrice}%0AImage: ${productImageSrc}`;
 
         window.open(
           "https://wa.me/254758915553?text=" + encodeURIComponent(message),
@@ -267,7 +289,14 @@
 
       cart.forEach(function (product, index) {
         var li = document.createElement("li");
-        li.textContent = `${product.name} (KES ${product.price.toFixed(2)} x ${product.quantity})`;
+        var image = document.createElement("img");
+        image.src = product.imageSrc;
+        image.width = 30;
+        image.height = 30;
+        li.appendChild(image);
+        var info = document.createElement("p");
+        info.textContent = `${product.name} (KES ${product.price.toFixed(2)} x ${product.quantity})`;
+        li.appendChild(info);
         cartItemsList.appendChild(li);
       });
     }
